@@ -1,7 +1,11 @@
 import React, { Fragment } from "react";
 import { useRouter } from "next/router";
 // import { getEventById } from "../../dummy-data";
-import { getEventById, getAllEvents } from "../../helpers/api-utils";
+import {
+  getEventById,
+  // getAllEvents,
+  getFeaturedEvents,
+} from "../../helpers/api-utils";
 import EventSummary from "../../components/event-detail/event-summary";
 import EventLogistics from "../../components/event-detail/event-logistics";
 import EventContent from "../../components/event-detail/event-content";
@@ -14,7 +18,11 @@ function EventDetailPage(props) {
   const event = props.selectedEvent;
 
   if (!event) {
-    return <p>No Event Found with that ID</p>;
+    return (
+      <div className="center">
+        <h4>Loading....</h4>
+      </div>
+    );
   }
 
   return (
@@ -41,15 +49,16 @@ export async function getStaticProps(context) {
 
   return {
     props: { selectedEvent: event },
+    revalidate: 30,
   };
 }
 
 export async function getStaticPaths(context) {
-  const events = await getAllEvents();
+  const events = await getFeaturedEvents();
 
   const paths = events.map((event) => ({ params: { eventId: event.id } }));
   return {
     paths: paths,
-    fallback: false,
+    fallback: true,
   };
 }

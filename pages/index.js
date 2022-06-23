@@ -23,5 +23,6 @@ export async function getStaticProps(context) {
   // console.log("Featured", feauturedEvents);
   return {
     props: { events: feauturedEvents },
+    revalidate: 1800,
   };
 }
