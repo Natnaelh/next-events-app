@@ -6,6 +6,7 @@ import DateIcon from "../icons/date-icon";
 import AddressIcon from "../icons/address-icon";
 import ArrowRightIcon from "../icons/arrow-right-icon";
 import Button from "../ui/button";
+import Image from "next/image";
 function EventItem(props) {
   const { title, image, date, location, id } = props;
   const options = {
@@ -20,7 +21,13 @@ function EventItem(props) {
 
   return (
     <li className={classes.item}>
-      <img src={"/" + image} alt="" />
+      <Image
+        src={"/" + image}
+        alt={image}
+        width={250}
+        height={150}
+        priority="blur"
+      />
       <div className={classes.content}>
         <div className={classes.summary}>
           <h2>{title}</h2>

@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import Head from "next/head";
 import EventList from "../../components/events/event-list";
 // import { getFilteredEvents } from "../../dummy-data";
 import { getFilteredEvents } from "../../helpers/api-utils";
@@ -16,10 +17,20 @@ function FilteredEventsPage(props) {
   // }
   // const year = +filteredPath[0];
   // const month = +filteredPath[1];
+  const headerSection = (
+    <Head>
+      <title>Filtered Events</title>
+      <meta
+        name="description"
+        content={`Events in ${props.date.year} ' '  ${props.date.month}`}
+      />
+    </Head>
+  );
 
   if (props.hasError) {
     return (
       <Fragment>
+        {headerSection}
         <ErrorAlert>
           <p className="center">Invalid filter, Please adjust your values.</p>
         </ErrorAlert>
@@ -34,6 +45,7 @@ function FilteredEventsPage(props) {
   if (!filteredEvents || filteredEvents.length === 0) {
     return (
       <Fragment>
+        {headerSection}
         <ErrorAlert>
           <p>No Events found for the chosen time.</p>
         </ErrorAlert>
@@ -48,6 +60,7 @@ function FilteredEventsPage(props) {
 
   return (
     <Fragment>
+      {headerSection}
       <ResultsTitle date={date} />
       <EventList events={filteredEvents} />
     </Fragment>
